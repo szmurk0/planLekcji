@@ -39,8 +39,6 @@ int zakoncz() {
 - - - - - - - - - Real Cooking
 
 
-planLekcja.cpp
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -49,6 +47,7 @@ planLekcja.cpp
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <locale.h>
 
 using namespace std;
 
@@ -57,7 +56,7 @@ struct Zajecie {
     string nazwa;
 };
 
-map<string, vector<Zajecie>> planZajec;
+map<int, vector<Zajecie>> planZajec; // Poprawiono typ klucza na int
 
 void WczytajPlanZPliku();
 void Odczytaj();
@@ -82,13 +81,18 @@ void WczytajPlanZPliku() {
         return;
     }
 
-    string linia, dzien;
+    string linia;
+    int numerDnia;
     while (getline(plik, linia)) {
         if (linia.empty()) continue;
 
-        if (linia.back() == ':') {
-            dzien = linia.substr(0, linia.size() - 1);
-            planZajec[dzien] = vector<Zajecie>();
+        if (isdigit(linia[0])) {
+            stringstream ss(linia);
+            ss >> numerDnia; // Zapisujemy numer dnia tygodnia
+            ss.ignore(1); // Pomijamy spacje
+            string nazwaDnia;
+            ss >> nazwaDnia; // Nazwa dnia nie jest już potrzebna, ale musimy ją odczytać
+            planZajec[numerDnia] = vector<Zajecie>();
         }
         else {
             istringstream iss(linia);
@@ -97,7 +101,7 @@ void WczytajPlanZPliku() {
             iss.ignore(3); // Pomijamy "-"
             getline(iss, nazwa);
             if (nazwa != "---") {
-                planZajec[dzien].push_back({ godzina, nazwa });
+                planZajec[numerDnia].push_back({ godzina, nazwa });
             }
         }
     }
@@ -105,6 +109,7 @@ void WczytajPlanZPliku() {
 }
 
 void Menu() {
+    setlocale(LC_CTYPE, "Polish");
     int wybor;
     bool koniec = false;
 
@@ -143,31 +148,61 @@ void Menu() {
             cout << "Nieznana opcja!\n";
             break;
         }
-    }
+    } // &nbsp;
 }
 
 void Odczytaj() {
-    string dzien;
-    cout << "Podaj dzien tygodnia: ";
-    cin >> dzien;
+    int numerDnia;
+    cout << "Podaj numer dnia tygodnia (1-Poniedzialek, 2-Wtorek, ...): ";
+    cin >> numerDnia;
 
-    transform(dzien.begin(), dzien.end(), dzien.begin(),
-        [](unsigned char c) { return tolower(c); });
-
-    if (planZajec.find(dzien) == planZajec.end()) {
-        cout << "Nie znaleziono planu na " << dzien << ".\n";
+    auto it = planZajec.find(numerDnia);
+    if (it == planZajec.end()) {
+        cout << "Nie znaleziono planu na dzien numer " << numerDnia << ".\n";
         return;
     }
 
-    cout << "Plan zajec na " << dzien << ":\n";
-    for (const auto& zajecie : planZajec[dzien]) {
+    cout << "Plan zajec na dzien numer " << numerDnia << ":\n";
+    for (const auto& zajecie : it->second) {
         cout << zajecie.godzina << " - " << zajecie.nazwa << "\n";
     }
 }
 
 void Edytuj() {
-    // Tutaj implementacja funkcji Edytuj.
+    // Example implementation
+    int numerDnia;
+    cout << "Podaj numer dnia tygodnia do edycji: ";
+    cin >> numerDnia;
+
+    // Check if the day exists in the schedule
+    auto it = planZajec.find(numerDnia);
+    if (it == planZajec.end()) {
+        cout << "Nie ma takiego dnia w planie.\n";
+        return;
+    }
+
+    // Present options for the day
+    cout << "1. Dodaj zajecie\n";
+    cout << "2. Edytuj zajecie\n";
+    cout << "3. Usun zajecie\n";
+    int opcja;
+    cin >> opcja;
+    switch (opcja) {
+    case 1:
+        // Dodawanie Klasy
+        break;
+    case 2:
+        // IEdytowanie Klasy
+        break;
+    case 3:
+        // Usuwanie klasy
+        break;
+    default:
+        cout << "Nieznana opcja!\n";
+        break;
+    }
 }
+
 
 void Zapisz() {
     ofstream plik("data.txt");
@@ -188,15 +223,13 @@ void Zapisz() {
 }
 
 void Usun() {
-    string dzien, godzina;
-    cout << "Podaj dzien tygodnia: ";
-    cin >> dzien;
-    cout << "Podaj godzine zajec: ";
-    cin >> godzina;
+    int numerDnia; // Poprawiono typ zmiennej na int
+    cout << "Podaj numer dnia tygodnia: ";
+    cin >> numerDnia;
 
-    auto& zajecia = planZajec[dzien];
-    auto it = remove_if(zajecia.begin(), zajecia.end(), [&godzina](const Zajecie& z) {
-        return z.godzina == godzina;
+    auto& zajecia = planZajec[numerDnia];
+    auto it = remove_if(zajecia.begin(), zajecia.end(), [](const Zajecie& z) {
+        // Tutaj wpisz warunek usuwania zajęć
         });
     if (it != zajecia.end()) {
         zajecia.erase(it, zajecia.end());
