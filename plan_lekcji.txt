@@ -1,5 +1,6 @@
-Poniedziałek
-7.10-7.55 ---
+
+Poniedzialek
+7.10-7.55 
 8:00-8:45 Pracownia Programowania Obiektowego
 8:50-9:35 Pracownia Programowania Obiektowego
 9:40-10:25 Godziny z Wychowawcą
@@ -8,9 +9,10 @@ Poniedziałek
 12:30-13:15 Matematyka
 13:25-14:10 Język Polski
 14:20-15:05 Historia
-15:10-15:55 ---
+15:10-15:55 
+
 Wtorek
-7.10-7.55 ---
+7.10-7.55
 8:00-8:45 Fizyka
 8:50-9:35 Podstawy Przedsiębiorczości
 9:40-10:25 Wychowanie Fizyczne
@@ -18,9 +20,10 @@ Wtorek
 11:30-12:15 Matematyka
 12:30-13:15 Matematyka
 13:25-14:10 Język Angielski
-14:20-15:05 ---
-15:10-15:55 ---
-Środa
+14:20-15:05 
+15:10-15:55 
+
+Sroda
 7.10-7.55 Programowanie Aplikacji Internetowych
 8:00-8:45 Biologia
 8:50-9:35 Historia
@@ -30,10 +33,11 @@ Wtorek
 12:30-13:15 Język Polski
 13:25-14:10 Geografia
 14:20-15:05 Religia
-15:10-15:55 ---
+15:10-15:55 
+
 Czwartek
-7.10-7.55 ---
-8:00-8:45 ---
+7.10-7.55 
+8:00-8:45 
 8:50-9:35 Programowanie Obiektowe
 9:40-10:25  Programowanie Obiektowe
 10:35-11:20 Pracownia Programowania Aplikacji Mobilnych
@@ -42,14 +46,15 @@ Czwartek
 13:25-14:10 Język Niemiecki
 14:20-15:05 Pracownia Zaawansowanych Aplikacji Webowych 
 15:10-15:55 Pracownia Zaawansowanych Aplikacji Webowych
-Piątek
-7.10-7.55 ---
+
+Piatek
+7.10-7.55 
 8:00-8:45 Informatyka
 8:50-9:35 Język Angielski
 9:40-10:25 Język Polski
 10:35-11:20 Matematyka
 11:30-12:15 Wychowanie Fizyczne
 12:30-13:15 Wychowanie Fizyczne
-13:25-14:10 ---
-14:20-15:05 ---
-15:10-15:55 ---
+13:25-14:10 
+14:20-15:05 
+15:10-15:55 
