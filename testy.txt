@@ -1,0 +1,214 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib> //do funkcji exit()
+#include <locale.h>
+#include <vector>
+
+using namespace std;
+
+vector<string> wszystkie_linie; // Definicja zmiennej w zakresie globalnym
+
+// Funkcja do wyczyszczenia konsoli
+void wyczyscKonsole() {
+    cout << "\033[2J\033[1;1H"; // Użycie kodu specjalnego ANSI Escape do wyczyszczenia konsoli
+}
+
+void odczytajPlanLekcji(const string& dzien) {
+    setlocale(LC_CTYPE, "Polish");
+    ifstream file("plan_lekcji.txt");
+
+    if (!file.is_open()) {
+        cerr << "Nie udalo sie otworzyc pliku.\n";
+        return;
+    }
+
+    string line;
+    bool znaleziono_dzien = false;
+    bool end_of_day_reached = false;
+
+    while (getline(file, line) && !end_of_day_reached) {
+        if (znaleziono_dzien) {
+            if (line.empty()) {
+                // Empty line signifies end of the day's schedule.
+                break;
+            }
+            cout << line << endl; // Print the schedule line for the day.
+        }
+
+        if (line.find(dzien) != string::npos) {
+            znaleziono_dzien = true; // Found the day to start printing from.
+            cout << line << endl; // Print the day line itself.
+        }
+        else if (znaleziono_dzien && (line.find("Poniedzialek") != string::npos ||
+            line.find("Wtorek") != string::npos ||
+            line.find("Sroda") != string::npos ||
+            line.find("Czwartek") != string::npos ||
+            line.find("Piatek") != string::npos)) {
+            end_of_day_reached = true; // Found the beginning of another day.
+        }
+    }
+
+    if (!znaleziono_dzien) {
+        cout << "Nie znaleziono planu lekcji dla podanego dnia tygodnia.\n";
+    }
+
+    file.close();
+}
+
+
+void zapisz() {
+    ofstream file_out("plan_lekcji.txt");
+    if (!file_out.is_open()) {
+        cerr << "Nie udalo sie otworzyc pliku do zapisu.\n";
+        return;
+    }
+
+    for (const auto& linia : wszystkie_linie) {
+        file_out << linia << endl;
+    }
+
+    file_out.close();
+    cout << "Plan lekcji zapisany pomyslnie.\n";
+}
+
+void edytujPlanLekcji(const string& dzien) {
+    ifstream file_in("plan_lekcji.txt");
+    if (!file_in.is_open()) {
+        cerr << "Nie udalo sie otworzyc pliku do odczytu.\n";
+        return;
+    }
+
+    // Odczytywanie wszystkich linii z pliku i zapamiętywanie ich
+    wszystkie_linie.clear(); // Wyczyszczenie wektora przed edycją
+    string line;
+    while (getline(file_in, line)) {
+        wszystkie_linie.push_back(line);
+    }
+
+    file_in.close();
+
+    // Znalezienie początku i końca sekcji dla wybranego dnia
+    int start_line = -1;
+    int end_line = -1;
+    for (int i = 0; i < wszystkie_linie.size(); ++i) {
+        if (wszystkie_linie[i].find(dzien) != string::npos) {
+            start_line = i;
+        }
+        else if (start_line != -1 && (wszystkie_linie[i].empty() || wszystkie_linie[i].find("Poniedzialek") != string::npos ||
+            wszystkie_linie[i].find("Wtorek") != string::npos ||
+            wszystkie_linie[i].find("Sroda") != string::npos ||
+            wszystkie_linie[i].find("Czwartek") != string::npos ||
+            wszystkie_linie[i].find("Piatek") != string::npos)) {
+            end_line = i;
+            break;
+        }
+    }
+
+    if (start_line == -1 || end_line == -1) {
+        cout << "Nie znaleziono planu dla podanego dnia.\n";
+        return;
+    }
+
+    // Proces edycji planu lekcji
+    cout << "Edytowanie planu lekcji dla dnia: " << dzien << endl;
+    for (int i = start_line + 1; i < end_line; ++i) {
+        cout << i - start_line << ". " << wszystkie_linie[i] << endl;
+    }
+
+    cout << "Wpisz numer lekcji, którą chcesz edytować, lub 0 aby zakończyć: ";
+    int numer_lekcji;
+    cin >> numer_lekcji;
+    cin.ignore();
+
+    while (numer_lekcji != 0) {
+        if (numer_lekcji <= 0 || numer_lekcji >= end_line - start_line) {
+            cout << "Niepoprawny numer lekcji. Spróbuj ponownie: ";
+        }
+        else {
+            int index = start_line + numer_lekcji;
+            string aktualna_lekcja = wszystkie_linie[index];
+            size_t pozycja = aktualna_lekcja.find("-");
+            if (pozycja != string::npos) {
+                pozycja = aktualna_lekcja.find(" ", pozycja); // Szukamy pierwszej spacji po godzinie
+            }
+
+            if (pozycja != string::npos) {
+                string godzina = aktualna_lekcja.substr(0, pozycja + 1); // Dodajemy 1, aby zachować spację po godzinie
+                cout << "Aktualna lekcja: " << aktualna_lekcja.substr(pozycja + 1) << endl; // Wyświetlamy tylko przedmiot
+                cout << "Wpisz nową nazwę przedmiotu: ";
+                getline(cin, line);
+                wszystkie_linie[index] = godzina + line; // Łączymy godzinę z nowym przedmiotem
+            }
+            else {
+                cout << "Nie znaleziono godziny lekcyjnej. Spróbuj ponownie." << endl;
+            }
+
+            cout << "Lekcja zaktualizowana. Wpisz kolejny numer lekcji lub 0 aby zakończyć: ";
+        }
+        cin >> numer_lekcji;
+        cin.ignore();
+    }
+
+    // Po zakończeniu edycji zapisujemy zmodyfikowany plan
+    zapisz();
+}
+
+void pomoc() {
+    cout << "Plan lekcji opiera się na wielu funkcjach, takich jak: " << endl;
+    cout << "odczytywanie planu \n edytowanie planu \n zapisywanie planu \n pomocy z planem \n zakończenia programu" << endl;
+    cout << "Aby dokonać odczytu planu, w odpowiedzi użytkownika należy wpisać 1" << endl;
+    cout << "Aby dokonać edycji planu, w odpowiedzi użytkownika należy wpisać 2" << endl;
+    cout << "Aby dokonać zapisu planu, w odpowiedzi użytkownika należy wpisać 3" << endl;
+    cout << "Aby dokonać zakończenia działania programu, w odpowiedzi użytkownika należy wpisać 5" << endl;
+}
+
+void zakoncz() {
+    cout << "Dziękujemy za korzystanie z naszego programu!";
+    exit(0);
+}
+
+int main() {
+    setlocale(LC_CTYPE, "Polish");
+    int wybor;
+    string dzien;
+
+    cout << "Co chcesz zrobić w naszym programie? " << endl;
+    cout << "1. Odczytaj Plan" << endl;
+    cout << "2. Edytuj Plan" << endl;
+    cout << "3. Zapisz Plan" << endl;
+    cout << "4. Pomoc" << endl;
+    cout << "5. Zakończ działanie programu" << endl;
+    cout << "odpowiedz >> ";
+    cin >> wybor;
+    cin.ignore(); // Ignore the newline character left in the input buffer.
+    wyczyscKonsole();
+
+    switch (wybor) {
+    case 1:
+        cout << "Podaj dzien tygodnia(Poniedzialek, Wtorek, Sroda, Czwartek, Piatek), dla ktorego chcesz wyswietlic plan lekcji: " << endl;
+        cout << "odpowiedz >>  ";
+        getline(cin, dzien); // Use getline to handle days with whitespace.
+        odczytajPlanLekcji(dzien);
+        break;
+    case 2: //edytowanie
+        cout << "Podaj dzien tygodnia, dla ktorego chcesz edytowac plan lekcji: ";
+        getline(cin, dzien); // Use getline to handle days with whitespace.
+        edytujPlanLekcji(dzien);
+        break;
+    case 3: //zapisywanie
+        zapisz();
+        break;
+    case 4: //pomoc
+        pomoc();
+        break;
+    case 5: //zakończenie
+        zakoncz();
+        break;
+    default:
+        cout << "Niepoprawny wybor funkcji.\n";
+        break;
+    }
+
+    return 0;
+}
