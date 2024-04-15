@@ -1,4 +1,4 @@
-//  // ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === \\
+//  // ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === \\
 // ||                                                                                                                                                                                                                 ||
 // ||                                                                                                   Witam w Projekcie Planu Lekcji!!!                                                                             || 
 // ||                                                                                                                                                                                                                 ||
@@ -12,9 +12,9 @@
 // ||       Znalazłem tą funkcję patrząc na "Przydatne funkcje w C++", bardzo mi się spodobała również pomyślałem że tutaj będzie się dobrze sprawować, awięc jest.                                                   ||
 // ||                                                                                                                                                                                                                 ||
 // ||  - odczytajPlanLekcji() -> Funkcja ta wypisuje wszystkie lekcje z danego dnia (wybranego przez użytkownika).                                                                                                    ||
-// ||       Jest odpowiedzialna za odczytanie planu lekcji z pliku "plan_lekcji.txt" dla danego dnia tygodnia i wyświetlenie go na standardowym wyjściu.                                                              ||
+// ||       Jest odpowiedzialna za odczytanie planu lekcji z pliku "data.txt" dla danego dnia tygodnia i wyświetlenie go na standardowym wyjściu.                                                                     ||
 // ||       Zasada działania tej funkcji:                                                                                                                                                                             ||
-// ||            - Otwiera plik "plan_lekcji.txt" w trybie odczytu.                                                                                                                                                   ||
+// ||            - Otwiera plik "data.txt" w trybie odczytu.                                                                                                                                                          ||
 // ||            - Sprawdza, czy udało się otworzyć plik, jeżeli nie udało się to wyświetla komunikat o błędzie.                                                                                                      ||
 // ||            - Iteruje po kolejnych liniach pliku, przeszukując je w poszukiwaniu nazwy podanego dnia tygodnia.                                                                                                   ||
 // ||            - Gdy znajdzie linie zawierającą nazwę podanego dnia, zaczyna wypisywać kolejne linie, aż do momentu natrafienia na pustą linię lub linie z nazwami dni tygodnia.                                    ||
@@ -24,14 +24,14 @@
 // ||  - zapisz() -> Jest to funkcja która wielokrotnie się przewija w tym kodzie.                                                                                                                                    ||
 // ||       Pozwala na automatyczne zapisywanie danych do pliku, bez potrzeby robienia tego manualnie.                                                                                                                ||
 // ||       Zasada działania tej funkcji:                                                                                                                                                                             ||
-// ||            - Otwiera plik "plan_lekcji.txt" w trybie zapisu.                                                                                                                                                    ||
+// ||            - Otwiera plik "data.txt" w trybie zapisu.                                                                                                                                                           ||
 // ||            - Sprawdza, czy udało się ten plik otworzyć. Jeśli nie, wypisuje komunikat o błędzie.                                                                                                                ||
 // ||            - Przechodzi przez wszystkie przechowywane linie (wszystkie_linie) i zapisuje je do pliku, każdą w osobnej linii (file_out << linia << endl;)                                                        ||
 // ||            - Na końcu plik jest zamykany.                                                                                                                                                                       ||
 // ||                                                                                                                                                                                                                 ||
 // ||  - edytujPlanLekcji() -> Funkcja ta służy do edycji planu lekcji dla danego dnia tygodnia.                                                                                                                      ||
 // ||       Funkcja ta polega na:                                                                                                                                                                                     ||
-// ||            - Najpierw otwiera plik "plan_lekcji.txt" w trybie odczytu.                                                                                                                                          ||
+// ||            - Najpierw otwiera plik "data.txt" w trybie odczytu.                                                                                                                                                 ||
 // ||            - Wczytuje wszystkie linie z pliku do wektora `wszystkie_linie`.                                                                                                                                     ||
 // ||            - Następnie wyszukuje w wektorze indeks początku i końca planu lekcji dla danego dnia tygodnia na podstawie nazwy dnia                                                                               ||
 // ||            - Jeśli nie znaleziono planu dla podanego dnia, wyświetla odpowiedni komunikat.                                                                                                                      ||
@@ -39,24 +39,24 @@
 // ||            - Prosi użytkownika o wybór numeru lekcji do edycji.                                                                                                                                                 ||
 // ||            - Po wybraniu lekcji, prosi użytkownika o podanie nowej nazwy przedmiotu.                                                                                                                            ||
 // ||            - Aktualizuje wybraną lekcję w wektorze `wszystkie_linie`.                                                                                                                                           ||
-// ||            - Zapisuje zmieniony plan lekcji do pliku "plan_lekcji.txt" przez wywołanie funkcji zapisz(),                                                                                                        ||
+// ||            - Zapisuje zmieniony plan lekcji do pliku "data.txt" przez wywołanie funkcji zapisz(),                                                                                                               ||
 // ||                która otwiera plik w trybie zapisu i zapisuje wszystkie linie z wektora `wszystkie_linie` do pliku                                                                                               ||
 // ||                                                                                                                                                                                                                 ||
 // ||  - usunLekcje() -> Funkcja ta służy do usuwania poszczególnych lekcji wybranych przez użytkownika                                                                                                               ||
 // ||       Funkcja ta oparta jest na:                                                                                                                                                                                ||
-// ||            - Najpierw otwiera plik "plan_lekcji.txt" w trybie odczytu.                                                                                                                                          ||
+// ||            - Najpierw otwiera plik "data.txt" w trybie odczytu.                                                                                                                                                 ||
 // ||            - Wczytuje wszystkie linie z pliku do wektora wszystkie_linie.                                                                                                                                       ||
 // ||            - Następnie wyszukuje w wektorze indeks początku i końca planu lekcji dla danego dnia tygodnia na podstawie nazwy dnia                                                                               ||
 // ||            - Jeśli nie znaleziono planu dla podanego dnia, wyświetla odpowiedni komunikat.                                                                                                                      ||
 // ||            - Jeśli plan lekcji został znaleziony, wyświetla listę lekcji do usunięcia.                                                                                                                          ||
 // ||            - Prosi użytkownika o wybór numeru lekcji do usunięcia.                                                                                                                                              ||          
 // ||            - Po wybraniu lekcji, usuwa nazwę przedmiotu z wybranej lekcji poprzez ustawienie jej na pusty ciąg znaków ("")                                                                                      ||
-// ||            - Zapisuje zmieniony plan lekcji do pliku "plan_lekcji.txt" przez wywołanie funkcji zapisz(),                                                                                                        ||
+// ||            - Zapisuje zmieniony plan lekcji do pliku "data.txt" przez wywołanie funkcji zapisz(),                                                                                                               ||
 // ||                która otwiera plik w trybie zapisu i zapisuje wszystkie linie z wektora wszystkie_linie` do pliku.                                                                                               ||
 // ||                                                                                                                                                                                                                 ||
 // ||  - zapiszLekcje -> Funkcja ta odpowiada za zapisywanie nowych lekcji dla danego dnia tygodnia.                                                                                                                  ||
 // ||       Oto działanie funkcji zapiszLekcje():                                                                                                                                                                     ||
-// ||            - Najpierw otwiera plik "plan_lekcji.txt" w trybie odczytu                                                                                                                                           ||
+// ||            - Najpierw otwiera plik "data.txt" w trybie odczytu                                                                                                                                                  ||
 // ||            - Wczytuje wszystkie linie z pliku do wektora `wszystkie_linie`.                                                                                                                                     ||
 // ||            - Następnie wyszukuje w wektorze indeks początku i końca planu lekcji dla danego dnia tygodnia na podstawie nazwy dnia                                                                               || 
 // ||            - Jeśli nie znaleziono planu dla podanego dnia, wyświetla odpowiedni komunikat.                                                                                                                      ||
@@ -64,7 +64,7 @@
 // ||            - Prosi użytkownika o wybór numeru lekcji do zapisania.                                                                                                                                              ||
 // ||            - Po wybraniu lekcji, sprawdza czy wybrana lekcja jest pusta (czyli czy nie ma nazwy przedmiotu).                                                                                                    ||
 // ||            - Zapisuje nową lekcję do odpowiedniego indeksu w wektorze `wszystkie_linie`.                                                                                                                        ||
-// ||            - Zapisuje zmieniony plan lekcji do pliku "plan_lekcji.txt" przez wywołanie funkcji zapisz(),                                                                                                        ||
+// ||            - Zapisuje zmieniony plan lekcji do pliku "data.txt" przez wywołanie funkcji zapisz(),                                                                                                               ||
 // ||                która otwiera plik w trybie zapisu i zapisuje wszystkie linie z wektora wszystkie_linie do pliku.                                                                                                ||
 // ||                                                                                                                                                                                                                 ||
 // ||                                                                                                                                                                                                                 ||
@@ -87,26 +87,31 @@
 // ||   - <locale.h> -> W tym kodzie odpowiada za dodanie polskich znaków do konsoli, czasami nie działa z różnych powodów, lecz jest to porządna biblioteka.                                                         ||
 // ||                                                                                                                                                                                                                 ||
 // ||   - <vector> -> Biblioteka ta dostarcza wektory, które są używane do przechowywania wszystkich linii z pliku tekstowego w funkcjach zapisz(), edytujPlanLekcji(), usunLekcje() i zapiszLekcje().                ||
-// ||                                                                                                                                                                                                                 ||
+// ||                                                                                                                                           -- Program mojego autorstwa, Oskara Szmurło 3P                        ||
 //  \\ ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  === //
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdlib>
-#include <locale.h>
 #include <vector>
+#include <locale.h>
 using namespace std;
+
+// Gdyż sam w sobie kolor czcionki jest nudny, zamieniam go na cyjanowy
+// Tzw makrodefinicja koloru, to akurat znalazłem na necie, gdyż bardzo chciałem zmienić kolor czcionki, lecz nie wiedziałem jak to zrobić.
+#define CYAN    "\033[36m"      /* Cyjanowy */
+#define RESET   "\033[0m"       /* Reset */
 
 vector<string> wszystkie_linie;
 
 void wyczyscKonsole() { // Pełne wytłumaczenie działania tej funkcji: linijka 6
-    cout << "\033[2J\033[1;1H";
+    cout << "\033[2J\033[1;1H"; 
 }
 
 void odczytajPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działania tej funkcji: linijka 14
     setlocale(LC_CTYPE, "Polish");
-    ifstream file("plan_lekcji.txt");
+    ifstream file("data.txt");
 
     if (!file.is_open()) {
         cerr << "Nie udalo sie otworzyc pliku.\n";
@@ -147,9 +152,9 @@ void odczytajPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działan
 }
 
 void zapisz() { // Pełne wytłumaczenie działania tej funkcji: linijka 24
-    ofstream file_out("plan_lekcji.txt");
+    ofstream file_out("data.txt");
     if (!file_out.is_open()) {
-        cerr << "Nie udalo sie otworzyc pliku do zapisu.\n";
+        cerr << "Nie udalo sie otworzyc pliku do zapisu.\n"; 
         return;
     }
 
@@ -163,7 +168,7 @@ void zapisz() { // Pełne wytłumaczenie działania tej funkcji: linijka 24
 
 
 void edytujPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działania tej funkcji: linijka 32
-    ifstream file_in("plan_lekcji.txt");
+    ifstream file_in("data.txt");
     if (!file_in.is_open()) {
         cerr << "Nie udalo sie otworzyc pliku do odczytu.\n";
         return;
@@ -190,7 +195,7 @@ void edytujPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działania
             wszystkie_linie[i].find("Piatek") != string::npos)) {
             end_line = i;
             break;
-        }
+        } 
     }
 
     if (start_line == -1 || end_line == -1) {
@@ -224,7 +229,7 @@ void edytujPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działania
                 string godzina = aktualna_lekcja.substr(0, pozycja + 1);
                 cout << "Aktualna lekcja: " << aktualna_lekcja.substr(pozycja + 1) << endl;
                 cout << "Wpisz nową nazwę przedmiotu: " << endl;
-                cout << "output >>  ";
+                cout << "output <<  ";
                 getline(cin, line);
                 wszystkie_linie[index] = godzina + line;
             }
@@ -242,7 +247,7 @@ void edytujPlanLekcji(const string& dzien) { // Pełne wytłumaczenie działania
 }
 
 void usunLekcje(const string& dzien) { // Pełne wytłumaczenie działania tej funkcji: linijka 45
-    ifstream file_in("plan_lekcji.txt");
+    ifstream file_in("data.txt");
     if (!file_in.is_open()) {
         cerr << "Nie udało się otworzyć pliku do odczytu.\n";
         return;
@@ -273,7 +278,7 @@ void usunLekcje(const string& dzien) { // Pełne wytłumaczenie działania tej f
     }
 
     if (start_line == -1 || end_line == -1) {
-        cout << "Nie znaleziono planu dla podanego dnia.\n";
+        cout << "Nie znaleziono planu dla podanego dnia.\n"; 
         return;
     }
 
@@ -311,7 +316,7 @@ void usunLekcje(const string& dzien) { // Pełne wytłumaczenie działania tej f
 
  
 void zapiszLekcje(const string& dzien) { // Pełne wytłumaczenie działania tej funkcji: linijka 57
-    ifstream file_in("plan_lekcji.txt");
+    ifstream file_in("data.txt");
     if (!file_in.is_open()) {
         cerr << "Nie udało się otworzyć pliku do odczytu.\n";
         return;
@@ -365,7 +370,7 @@ void zapiszLekcje(const string& dzien) { // Pełne wytłumaczenie działania tej
 
             if (wszystkie_linie[index].find(" ") == string::npos) {
                 cout << "Wpisz nazwę przedmiotu do zapisania " << endl;
-                cout << "output >>  ";
+                cout << "output <<  ";
                 getline(cin, line);
                 wszystkie_linie[index] += " " + line;
                 cout << "Lekcja zapisana. Wpisz kolejny numer lekcji do zapisania lub 0 aby zakończyć: ";
@@ -410,6 +415,7 @@ void zakoncz() { // Pełne wytłumaczenie działania tej funkcji: linijka 73
 }
 
 int main() { // Pełne wytłumaczenie działania tej funkcji: linijka 75
+    cout << CYAN;
     setlocale(LC_CTYPE, "Polish");
     int wybor;
     string dzien;
@@ -426,7 +432,7 @@ int main() { // Pełne wytłumaczenie działania tej funkcji: linijka 75
         cout << " ||           6. Zakończ działanie programu            ||" << endl;
         cout << " ||                                                    ||" << endl;
         cout << "  \\\\ === === === === === ===  === === === === === === // \n" << endl;
-        cout << "output >> ";
+        cout << "output << ";
         cin >> wybor;
         cin.ignore();
         wyczyscKonsole();
@@ -434,25 +440,25 @@ int main() { // Pełne wytłumaczenie działania tej funkcji: linijka 75
         switch (wybor) {
         case 1:
             cout << "Podaj dzien tygodnia(Poniedzialek, Wtorek, Sroda, Czwartek, Piatek), dla ktorego chcesz wyswietlic plan lekcji " << endl;
-            cout << "output >>  ";
+            cout << "output <<  ";
             getline(cin, dzien);
             odczytajPlanLekcji(dzien);
             break;
         case 2:
             cout << "Podaj dzien tygodnia(Poniedzialek, Wtorek, Sroda, Czwartek, Piatek), dla ktorego chcesz edytowac plan lekcji " << endl;
-            cout << "output >> ";
+            cout << "output << ";
             getline(cin, dzien);
             edytujPlanLekcji(dzien);
             break;
         case 3:
             cout << "Podaj dzien tygodnia(Poniedzialek, Wtorek, Sroda, Czwartek, Piatek), dla ktorego chcesz usunac lekcje " << endl;
-            cout << "output >> ";
+            cout << "output << ";
             getline(cin, dzien);
             usunLekcje(dzien);
             break;
         case 4:
             cout << "Podaj dzien tygodnia(Poniedzialek, Wtorek, Sroda, Czwartek, Piatek), dla ktorego chcesz zapisac lekcje " << endl;
-            cout << "output >> ";
+            cout << "output << ";
             getline(cin, dzien);
             zapiszLekcje(dzien);
             break;
@@ -468,7 +474,7 @@ int main() { // Pełne wytłumaczenie działania tej funkcji: linijka 75
         }
 
         cout << "Czy chcesz kontynuować korzystanie z programu? (T/N): " << endl;
-        cout << "output >> ";
+        cout << "output << ";
         char kontynuacja;
         cin >> kontynuacja;
         cin.ignore();
