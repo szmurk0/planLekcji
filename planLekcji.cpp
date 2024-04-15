@@ -76,7 +76,7 @@
 // ||                                                                                                                                                                                                                 ||
 // ||   Wykorzystane biblioteki:                                                                                                                                                                                      ||
 // ||                                                                                                                                                                                                                 ||
-// ||   - <iostrean> -> Biblioteka potrzebna do operacji wejścia/wyjścia (input/output)                                                                                                                               ||
+// ||   - <iostream> -> Biblioteka potrzebna do operacji wejścia/wyjścia (input/output)                                                                                                                               ||
 // ||                                                                                                                                                                                                                 ||
 // ||   - <fstream> -> Biblioteka ta umożliwia operacje na plikach, takie jak odczyt i zapis. Jest wykorzystywana w  odczytajPlanLekcji(), zapisz(), edytujPlanLekcji(), usunLekcje() i zapiszLekcje() ".             ||
 // ||                                                                                                                                                                                                                 ||
